@@ -31,8 +31,8 @@ public class RNLocalNotificationsModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void createNotification(Integer id, String text, String datetime, String sound) {
-        this.createAlarm(id, text, datetime, sound, false);
+    public void createNotification(Integer id, String text, String datetime, String sound, String data) {
+        this.createAlarm(id, text, datetime, sound, false, data);
     }
 
     @ReactMethod
@@ -41,11 +41,11 @@ public class RNLocalNotificationsModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void updateNotification(Integer id, String text, String datetime, String sound) {
-        this.createAlarm(id, text, datetime, sound, true);
+    public void updateNotification(Integer id, String text, String datetime, String sound, String data) {
+        this.createAlarm(id, text, datetime, sound, true, data);
     }
 
-    public void createAlarm(Integer id, String text, String datetime, String sound, boolean update) {
+    public void createAlarm(Integer id, String text, String datetime, String sound, boolean update, String data) {
         if(update){
             this.deleteAlarm(id);
         }
@@ -66,6 +66,7 @@ public class RNLocalNotificationsModule extends ReactContextBaseJavaModule {
         intent.putExtra("text", text);
         intent.putExtra("datetime", datetime);
         intent.putExtra("sound", sound);
+        intent.putExtra("data", data);
 
         PendingIntent mAlarmSender = PendingIntent.getBroadcast(reactContext, id, intent, 0);
 
