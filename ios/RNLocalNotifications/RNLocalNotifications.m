@@ -9,9 +9,9 @@
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(createNotification:(NSInteger *)id text:(NSString *)text datetime:(NSString *)datetime sound:(NSString *)sound)
+RCT_EXPORT_METHOD(createNotification:(NSInteger *)id text:(NSString *)text datetime:(NSString *)datetime sound:(NSString *)sound data:(NSString *)data)
 {
-    [self createAlarm:id text:text datetime:datetime sound:sound update:FALSE];
+    [self createAlarm:id text:text datetime:datetime sound:sound update:FALSE data:data];
 };
 
 RCT_EXPORT_METHOD(deleteNotification:(NSInteger *)id)
@@ -19,12 +19,12 @@ RCT_EXPORT_METHOD(deleteNotification:(NSInteger *)id)
     [self deleteAlarm:id];
 };
 
-RCT_EXPORT_METHOD(updateNotification:(NSInteger *)id text:(NSString *)text datetime:(NSString *)datetime sound:(NSString *)sound)
+RCT_EXPORT_METHOD(updateNotification:(NSInteger *)id text:(NSString *)text datetime:(NSString *)datetime sound:(NSString *)sound data:(NSString *)data)
 {
-    [self createAlarm:id text:text datetime:datetime sound:sound update:TRUE];
+    [self createAlarm:id text:text datetime:datetime sound:sound update:TRUE data:data];
 };
 
-- (void)createAlarm:(NSInteger *)id text:(NSString *)text datetime:(NSString *)datetime sound:(NSString *)sound update:(Boolean *)update {
+- (void)createAlarm:(NSInteger *)id text:(NSString *)text datetime:(NSString *)datetime sound:(NSString *)sound update:(Boolean *)update data:(NSString *)data {
     if(update){
         [self deleteAlarm:id];
     }
@@ -50,6 +50,8 @@ RCT_EXPORT_METHOD(updateNotification:(NSInteger *)id text:(NSString *)text datet
         [md setValue:text forKey:@"text"];
         [md setValue:datetime forKey:@"datetime"];
         [md setValue:sound forKey:@"sound"];
+        [md setValue:data forKey:@"data"];
+
         notification.userInfo = md;
         [[UIApplication sharedApplication] scheduleLocalNotification:notification];
     }
