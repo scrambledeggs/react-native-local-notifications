@@ -13,6 +13,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import android.net.Uri;
 
 public class RNLocalNotificationsModule extends ReactContextBaseJavaModule {
 
