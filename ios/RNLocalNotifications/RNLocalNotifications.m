@@ -1,11 +1,13 @@
 #import <UIKit/UIKit.h>
 #import "RCTBridgeModule.h"
+#import "RCTEventEmitter.h"
 
-
-@interface RNLocalNotifications : NSObject <RCTBridgeModule>
+@interface RNLocalNotifications : RCTEventEmitter <RCTBridgeModule>
 @end
 
-@implementation RNLocalNotifications
+@implementation RNLocalNotifications {
+    bool hasListeners;
+}
 
 RCT_EXPORT_MODULE();
 
@@ -65,6 +67,31 @@ RCT_EXPORT_METHOD(updateNotification:(NSInteger *)id text:(NSString *)text datet
         if ([[md valueForKey:@"id"] integerValue] == [[NSNumber numberWithInteger:id] integerValue]) {
             [[UIApplication sharedApplication] cancelLocalNotification:notification];
         }
+    }
+}
+
+//Override methods
+
+// Will be called when this module's first listener is added.
+-(void)startObserving {
+    hasListeners = YES;
+    // Set up any upstream listeners or background tasks as necessary
+}
+
+// Will be called when this module's last listener is removed, or on dealloc.
+-(void)stopObserving {
+    hasListeners = NO;
+    // Remove upstream listeners, stop unnecessary background tasks
+}
+
+- (NSArray<NSString *> *)supportedEvents
+{
+    return @[@"LocalNotifReceived"];
+}
+
+- (void)localNotifReceived: (UILocalNotification *)notification {
+    if (hasListeners) {
+        [self sendEventWithName:@"LocalNotifReceived" body:notification.userInfo[@"data"]];
     }
 }
 
