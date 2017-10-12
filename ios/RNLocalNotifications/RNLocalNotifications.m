@@ -2,8 +2,7 @@
 #import "RCTBridgeModule.h"
 #import "RCTEventEmitter.h"
 
-@interface RNLocalNotifications : RCTEventEmitter <RCTBridgeModule>
-@end
+#import "RNLocalNotifications.h"
 
 @implementation RNLocalNotifications {
     bool hasListeners;
