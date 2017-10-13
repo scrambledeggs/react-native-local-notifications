@@ -1,4 +1,6 @@
-import {NativeModules} from 'react-native';
+import { NativeModules, NativeEventEmitter } from 'react-native';
+
+const RNEventEmitter = new NativeEventEmitter(NativeModules.RNLocalNotifications);
 
 var RNLocalNotifications = {
   createNotification: function(id, text, datetime, sound, data) {
@@ -10,6 +12,9 @@ var RNLocalNotifications = {
   updateNotification: function(id, text, datetime, sound, data) {
         NativeModules.RNLocalNotifications.updateNotification(id, text, datetime, sound, data);
   },
+  getEventEmitter: function() {
+    return RNEventEmitter;
+  }
 };
 
 export default RNLocalNotifications;
