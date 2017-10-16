@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -27,6 +28,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             String text = intent.getExtras().getString("text", "");
             String datetime = intent.getExtras().getString("datetime", "");
             String sound = intent.getExtras().getString("sound", "");
+            String data = intent.getExtras().getString("data", "");
 
             if(!this.isAppOnForeground(context)) {
                 // Set the icon, scrolling text and timestamp
@@ -36,7 +38,8 @@ public class AlarmReceiver extends BroadcastReceiver {
                 String appName = context.getPackageManager().getApplicationLabel(appInfo).toString();
                 NotificationCompat.Builder mBuilder =
                         new NotificationCompat.Builder(context)
-                                .setSmallIcon(res.getIdentifier("notification_small", "drawable", packageName)) //TODO: add the icon yourself!
+                                .setSmallIcon(res.getIdentifier("icon_booky", "drawable", packageName)) //TODO: add the icon yourself!
+                                .setLargeIcon(BitmapFactory.decodeResource(res, res.getIdentifier("icon_booky", "drawable", packageName)))
                                 .setContentTitle(appName)
                                 .setContentText(text)
                                 .setStyle(new NotificationCompat.BigTextStyle().bigText(text))
@@ -57,7 +60,8 @@ public class AlarmReceiver extends BroadcastReceiver {
                     //TODO: if you want feedback
                 }
                 Intent openIntent = new Intent(context, cl);
-
+                openIntent.putExtra("data", data);
+                openIntent.putExtra("pass", true);
                 // The PendingIntent to launch our activity if the user selects this notification
                 PendingIntent contentIntent = PendingIntent.getActivity(context, 0, openIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 mBuilder.setContentIntent(contentIntent);
