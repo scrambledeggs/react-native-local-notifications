@@ -63,7 +63,7 @@ public class RNLocalNotificationsModule extends ReactContextBaseJavaModule {
 
         Intent intent = new Intent(reactContext, AlarmReceiver.class);
         intent.setAction("com.github.wumke.RNLocalNotifications.showAlarm");
-        intent.setData(Uri.parse(data));
+        // intent.setData(Uri.parse(data));
         intent.putExtra("id", id);
         intent.putExtra("text", text);
         intent.putExtra("datetime", datetime);
@@ -85,7 +85,7 @@ public class RNLocalNotificationsModule extends ReactContextBaseJavaModule {
         PendingIntent pi = PendingIntent.getBroadcast(reactContext, id, intent, PendingIntent.FLAG_NO_CREATE);
         if(pi != null){
             pi.cancel();
+            alarmManager.cancel(pi);
         }
-        alarmManager.cancel(pi);
     }
 }
