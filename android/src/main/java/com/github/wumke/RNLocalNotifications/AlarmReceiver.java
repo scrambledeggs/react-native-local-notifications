@@ -38,7 +38,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                 String appName = context.getPackageManager().getApplicationLabel(appInfo).toString();
                 NotificationCompat.Builder mBuilder =
                         new NotificationCompat.Builder(context)
-                                .setSmallIcon(res.getIdentifier("icon_booky", "drawable", packageName)) //TODO: add the icon yourself!
+                                .setSmallIcon(res.getIdentifier("ic_svg_booky", "drawable", packageName)) //TODO: add the icon yourself!
                                 .setLargeIcon(BitmapFactory.decodeResource(res, res.getIdentifier("icon_booky", "drawable", packageName)))
                                 .setContentTitle(appName)
                                 .setContentText(text)
